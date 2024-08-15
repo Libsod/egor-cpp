@@ -1,11 +1,9 @@
+#include "ftxui/dom/elements.hpp"
 #include "ftxui/dom/node.hpp"
-#include <ftxui/dom/elements.hpp>
-#include <ftxui/dom/table.hpp>
-#include <ftxui/screen/color.hpp>
-#include <ftxui/screen/screen.hpp>
-#include <ftxui/screen/string.hpp>
+#include "ftxui/dom/table.hpp"
+#include "ftxui/screen/color.hpp"
+#include "ftxui/screen/screen.hpp"
 #include <iostream>
-#include <print>
 #include <string>
 #include <vector>
 
@@ -118,37 +116,20 @@ int main() {
 
   table.SelectAll().Border(DOUBLE);
 
-  // Make first row bold with a double border
   table.SelectRow(0).Decorate(bold);
   table.SelectRow(0).SeparatorVertical(DOUBLE);
   table.SelectRow(0).Border(DOUBLE);
 
-  // Add border around the columns
-  table.SelectColumn(0).Border(DOUBLE);
-  table.SelectColumn(1).Border(DOUBLE);
-  table.SelectColumn(2).Border(DOUBLE);
-  table.SelectColumn(3).Border(DOUBLE);
-  table.SelectColumn(4).Border(DOUBLE);
-  table.SelectColumn(5).Border(DOUBLE);
-  table.SelectColumn(6).Border(DOUBLE);
+  for (int i = 0; i < 7; i++) {
+    table.SelectColumn(i).Border(DOUBLE);
+    table.SelectColumn(i).DecorateCells(center);
 
-  // Add aligning to center in columns
-  table.SelectColumn(0).DecorateCells(center);
-  table.SelectColumn(1).DecorateCells(center);
-  table.SelectColumn(2).DecorateCells(center);
-  table.SelectColumn(3).DecorateCells(center);
-  table.SelectColumn(4).DecorateCells(center);
-  table.SelectColumn(5).DecorateCells(center);
-  table.SelectColumn(6).DecorateCells(center);
-
-  // Alternate in between 3 colors.
-  table.SelectColumn(0).DecorateCells(color(Color::Yellow));
-  table.SelectColumn(1).DecorateCells(color(Color::Blue));
-  table.SelectColumn(2).DecorateCells(color(Color::Yellow));
-  table.SelectColumn(3).DecorateCells(color(Color::Blue));
-  table.SelectColumn(4).DecorateCells(color(Color::Yellow));
-  table.SelectColumn(5).DecorateCells(color(Color::Blue));
-  table.SelectColumn(6).DecorateCells(color(Color::Yellow));
+    if (i % 2 == 0) {
+      table.SelectColumn(i).DecorateCells(color(Color::Yellow));
+    } else {
+      table.SelectColumn(i).DecorateCells(color(Color::Blue));
+    }
+  }
 
   auto document = table.Render();
   auto screen = Screen::Create(Dimension::Full(), Dimension::Fit(document));
