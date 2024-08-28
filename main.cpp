@@ -11,7 +11,7 @@ using namespace std;
 using namespace ftxui;
 
 vector<vector<int>> initializeMatrix(int a) {
-  vector<vector<int>> x(a + 1, vector<int>(13));
+  vector x(a + 1, vector<int>(13));
   return x;
 }
 
@@ -90,7 +90,7 @@ int main() {
 
   vector<vector<int>> x = initializeMatrix(a);
   vector<int> z(a + 1);
-  int *it_list = new int[a + 1];
+  const auto it_list = new int[a + 1];
 
   inputMatrixData(x, a);
   calculateMatrixValues(x, a);
@@ -103,11 +103,11 @@ int main() {
 
   for (int i = 1; i <= a; i++) {
     std::string numbers;
-    for (int j = 1; j < 10; j++) {
-      numbers += j < 9 ? to_string(x[i][j]) + " " : to_string(x[i][j]);
+    for (int j = 1; j <= 9; j++) {
+      numbers += to_string(x[i][j]) + " ";
     }
     table_data.push_back({text(to_string(i)), text(to_string(it_list[i])),
-                          text(" " + numbers + " "), text(to_string(z[i])),
+                          text(" " + numbers), text(to_string(z[i])),
                           text(to_string(x[i][11])), text(to_string(x[i][12])),
                           text(to_string(x[i][13]))});
   }
